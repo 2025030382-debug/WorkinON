@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkinON — Conecta, colabora, crece</title>
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ======================= TOASTS ======================= -->
+<div id="toastStack" class="toast-stack" aria-live="polite"></div>
+
+<!-- ======================= AUTH SCREEN ======================= -->
+<section id="screen-auth" class="screen auth-screen is-active">
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <div class="auth-brand-shine"></div>
+      <div class="auth-brand-content">
+        <div class="auth-rocket">🚀</div>
+        <h1 class="auth-logo-text">Workin<span>ON</span></h1>
+        <p class="auth-tag">Conecta con talento, colabora en proyectos reales y crece profesionalmente.</p>
+      </div>
+    </div>
+
+    <div class="auth-panel">
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab is-active" data-auth-tab="login" role="tab" aria-selected="true">Iniciar sesión</button>
+        <button class="auth-tab" data-auth-tab="register" role="tab" aria-selected="false">Crear cuenta</button>
+      </div>
+
+      <!-- LOGIN -->
+      <form id="form-login" class="auth-form is-active" data-auth-panel="login" novalidate>
+        <h2 class="auth-title">¡Bienvenido de vuelta!</h2>
+        <p class="auth-subtitle">Ingresa tus credenciales para continuar</p>
+        <p class="auth-hint">¿Quieres probar rápido? Usa <strong>demo@workinon.com</strong> / <strong>demo1234</strong>, o crea tu propia cuenta.</p>
+
+        <div class="field">
+          <label for="login-email">Correo electrónico</label>
+          <input type="email" id="login-email" placeholder="tucorreo@ejemplo.com" required>
+          <span class="field-error">Ingresa un correo electrónico válido</span>
+        </div>
+
+        <div class="field">
+          <label for="login-password">Contraseña</label>
+          <div class="input-with-icon">
+            <input type="password" id="login-password" placeholder="••••••••" required minlength="8">
+            <button type="button" class="icon-toggle" data-toggle-pass="login-password" aria-label="Mostrar contraseña">👁</button>
+          </div>
+          <span class="field-error">La contraseña debe tener al menos 8 caracteres</span>
+        </div>
+
+        <a href="#" class="auth-link" data-goto-recover>¿Olvidaste tu contraseña?</a>
+
+        <button type="submit" class="btn btn-primary btn-block">Inicia Sesión</button>
+      </form>
+
+      <!-- REGISTER -->
+      <form id="form-register" class="auth-form" data-auth-panel="register" novalidate>
+        <h2 class="auth-title">Crea tu cuenta</h2>
+        <p class="auth-subtitle">Únete a miles de colaboradores</p>
+
+        <div class="field">
+          <label for="reg-name">Nombre completo</label>
+          <input type="text" id="reg-name" placeholder="Nombre y apellidos" required minlength="3">
+          <span class="field-error">Ingresa tu nombre completo</span>
+        </div>
+
+        <div class="field">
+          <label for="reg-email">Correo electrónico</label>
+          <input type="email" id="reg-email" placeholder="tucorreo@ejemplo.com" required>
+          <span class="field-error">Ingresa un correo electrónico válido</span>
+        </div>
+
+        <div class="field">
+          <label for="reg-password">Contraseña</label>
+          <input type="password" id="reg-password" placeholder="Mínimo 8 caracteres" required minlength="8">
+          <span class="field-error">La contraseña debe tener al menos 8 caracteres</span>
+        </div>
+
+        <div class="field">
+          <label for="reg-password2">Confirmar contraseña</label>
+          <input type="password" id="reg-password2" placeholder="Repite tu contraseña" required>
+          <span class="field-error">Las contraseñas no coinciden</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Crear cuenta</button>
+      </form>
+
+      <!-- RECOVER STEP 1 -->
+      <form id="form-recover1" class="auth-form" data-auth-panel="recover1" novalidate>
+        <h2 class="auth-title">Cambiar Contraseña</h2>
+        <p class="auth-subtitle">Ingresa tu correo y tu nueva contraseña de al menos ocho caracteres</p>
+
+        <div class="field">
+          <label for="rec-email">Correo electrónico</label>
+          <input type="email" id="rec-email" placeholder="tucorreo@ejemplo.com" required>
+          <span class="field-error">Ingresa un correo electrónico válido</span>
+        </div>
+
+        <div class="field">
+          <label for="rec-password">Contraseña</label>
+          <input type="password" id="rec-password" placeholder="Nueva contraseña" required minlength="8">
+          <span class="field-error">La contraseña debe tener al menos 8 caracteres</span>
+        </div>
+
+        <div class="field">
+          <label for="rec-password2">Verificar contraseña</label>
+          <input type="password" id="rec-password2" placeholder="Repite la nueva contraseña" required>
+          <span class="field-error">Las contraseñas no coinciden</span>
+        </div>
+
+        <p class="auth-hint">Se enviará un código de verificación al correo</p>
+
+        <button type="submit" class="btn btn-primary btn-block">Continuar</button>
+        <button type="button" class="btn btn-ghost btn-block" data-goto-login>Volver a iniciar sesión</button>
+      </form>
+
+      <!-- RECOVER STEP 2 -->
+      <form id="form-recover2" class="auth-form" data-auth-panel="recover2" novalidate>
+        <h2 class="auth-title">Cambiar Contraseña</h2>
+        <p class="auth-subtitle">Ingresa tu código de verificación</p>
+
+        <div class="field">
+          <label for="rec-code">Código de verificación</label>
+          <input type="text" id="rec-code" placeholder="0000" maxlength="4" required>
+          <span class="field-error">Ingresa el código de 4 dígitos que enviamos a tu correo</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Inicia Sesión</button>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================= APP SHELL ======================= -->
+<div id="app-shell" class="app-shell">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-brand" data-goto-screen="home">
+      <img src="assets/logo.png" alt="WorkinON" class="topbar-logo">
+    </div>
+    <nav class="topbar-actions">
+      <button class="icon-btn" data-goto-screen="search" title="Buscar" aria-label="Buscar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+      <div class="notif-wrap">
+        <button class="icon-btn" id="btn-notifications" title="Notificaciones" aria-label="Notificaciones">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="notif-dot" id="notif-dot"></span>
+        </button>
+        <div class="notif-panel" id="notif-panel">
+          <div class="notif-panel-head">Notificaciones</div>
+          <div id="notif-list">
+            <p class="notif-empty" id="notif-empty">Aún no tienes notificaciones. Aquí verás avisos de solicitudes, evaluaciones y más.</p>
+          </div>
+        </div>
+      </div>
+      <button class="icon-btn icon-btn-avatar" data-goto-screen="profile" title="Mi perfil" aria-label="Mi perfil">
+        <img id="topbar-avatar" src="" alt="" class="avatar-mini is-hidden">
+        <svg viewBox="0 0 24 24" id="topbar-avatar-fallback"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path></svg>
+      </button>
+      <button class="icon-btn" id="btn-menu" title="Menú" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </nav>
+  </header>
+
+  <!-- SIDEBAR / MENU OVERLAY -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Cerrar menú">←</button>
+    <h2 class="sidebar-title">Menú</h2>
+    <nav class="sidebar-nav">
+      <button class="sidebar-item" data-goto-screen="profile">Perfil</button>
+      <button class="sidebar-item" data-goto-screen="create-project">Crear</button>
+      <button class="sidebar-item" data-goto-screen="medals">Medallas</button>
+      <button class="sidebar-item" data-goto-screen="search">Buscar</button>
+      <button class="sidebar-item" data-goto-screen="report">Reportar</button>
+      <button class="sidebar-item" data-goto-screen="create-evaluation">Evaluar candidatos</button>
+      <button class="sidebar-item sidebar-item-logout" id="btn-logout">Cerrar sesión</button>
+    </nav>
+    <div class="sidebar-footer">
+      <img src="assets/logo.png" alt="WorkinON" class="sidebar-logo">
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- HOME -->
+    <section id="screen-home" class="screen is-active">
+      <div class="hero">
+        <h1>Construye el Futuro</h1>
+        <p>Colabora en proyectos increíbles, alcanza nuevas metas y consigue reconocimientos.</p>
+      </div>
+
+      <h3 class="section-title center">¿Cómo funciona?</h3>
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-icon">🔍</div>
+          <h4>Descubre</h4>
+          <p>Encuentra una variedad de proyectos que impulsen tus conocimientos.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-icon">🤝</div>
+          <h4>Colabora</h4>
+          <p>Relaciónate con equipos de trabajo que buscan lo mismo que tú.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-icon">🏅</div>
+          <h4>Consigue experiencia</h4>
+          <p>La experiencia que tanto necesitas, acompañada de reconocimiento.</p>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h3 class="section-title">Proyectos en desarrollo</h3>
+        <button class="link-btn" data-goto-screen="search">Ver todos →</button>
+      </div>
+      <div class="project-grid" id="home-project-grid"></div>
+    </section>
+
+    <!-- SEARCH -->
+    <section id="screen-search" class="screen">
+      <h1 class="page-title">Encuentra tu Proyecto</h1>
+
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" class="search-bar-icon"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="search-input" placeholder="Buscar por nombre, tecnología o empresa…">
+      </div>
+
+      <div class="filter-row" id="filter-chips">
+        <button class="chip is-active" data-filter-category="todos">Todos</button>
+        <button class="chip" data-filter-category="tecnología">Tecnología</button>
+        <button class="chip" data-filter-category="redes">Redes</button>
+        <button class="chip" data-filter-category="salud">Salud</button>
+        <button class="chip" data-filter-category="ciencia de datos">Ciencia de Datos</button>
+      </div>
+
+      <div class="filter-row filter-row-secondary">
+        <div class="select-wrap">
+          <label>Ordenar por</label>
+          <select id="filter-sort">
+            <option value="reciente">Más reciente</option>
+            <option value="vacantes">Más vacantes</option>
+            <option value="tiempo">Más tiempo</option>
+            <option value="miembros">Miembros</option>
+          </select>
+        </div>
+        <div class="select-wrap select-wrap-btn">
+          <button class="btn btn-ghost btn-small" id="btn-clear-filters">Limpiar filtros</button>
+        </div>
+      </div>
+
+      <p class="results-count" id="results-count"></p>
+      <div class="project-grid" id="search-project-grid"></div>
+      <p class="empty-state is-hidden" id="search-empty">No encontramos proyectos con esos filtros. Prueba ajustando la búsqueda.</p>
+    </section>
+
+    <!-- PROJECT DETAILS -->
+    <section id="screen-details" class="screen">
+      <button class="back-link" data-goto-screen="search">← Volver</button>
+      <div class="details-card" id="details-card"></div>
+    </section>
+
+    <!-- JOIN REQUEST -->
+    <section id="screen-join" class="screen">
+      <button class="back-link" data-back-target>← Volver</button>
+      <div class="form-card form-card-narrow">
+        <h2 id="join-title">Solicitud de unión</h2>
+        <p class="form-subtitle">Cuéntale al equipo por qué eres un buen candidato para este proyecto.</p>
+        <p class="join-as" id="join-as"></p>
+        <form id="form-join" novalidate>
+          <div class="field field-dark">
+            <label for="join-grado">Grado universitario</label>
+            <input type="text" id="join-grado" placeholder="Ej. Ingeniería en Sistemas, 6to semestre" required minlength="3">
+            <span class="field-error">Ingresa tu grado universitario</span>
+          </div>
+          <div class="field field-dark">
+            <label>¿A qué habilidad te postulas?</label>
+            <div class="checkbox-group" id="join-habilidades-group">
+              <p class="muted-sm">Este proyecto no especificó habilidades requeridas.</p>
+            </div>
+          </div>
+          <div class="field field-dark">
+            <label for="join-profile">Perfil o experiencia</label>
+            <textarea id="join-profile" rows="4" placeholder="Cuéntanos sobre tu experiencia y habilidades…" required minlength="10"></textarea>
+            <span class="field-error">Cuéntanos un poco más sobre tu experiencia (mín. 10 caracteres)</span>
+          </div>
+          <div class="field field-dark">
+            <label for="join-procedencia">¿Cómo te enteraste de este proyecto? (opcional)</label>
+            <input type="text" id="join-procedencia" placeholder="Ej. Buscador de WorkinON, recomendación…">
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" data-back-target>Cancelar</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- CREATE PROJECT -->
+    <section id="screen-create-project" class="screen">
+      <button class="back-link" data-goto-screen="home">← Volver</button>
+      <div class="form-card form-card-narrow">
+        <h2>Crear proyecto</h2>
+        <p class="form-subtitle">Completa la información para publicar tu proyecto y encontrar colaboradores.</p>
+        <form id="form-create-project" novalidate>
+          <div class="field field-dark">
+            <label for="proj-name">Nombre del proyecto</label>
+            <input type="text" id="proj-name" placeholder="Ej. App de gestión de tareas" required minlength="3">
+            <span class="field-error">Ingresa un nombre de al menos 3 caracteres</span>
+          </div>
+          <div class="field field-dark">
+            <label for="proj-desc">Descripción</label>
+            <textarea id="proj-desc" rows="4" placeholder="Describe tu proyecto, objetivos y lo que buscas en el equipo…" required minlength="15"></textarea>
+            <span class="field-error">La descripción debe tener al menos 15 caracteres</span>
+          </div>
+          <div class="field-row">
+            <div class="field field-dark">
+              <label for="proj-category">Categoría</label>
+              <select id="proj-category" required>
+                <option value="">Selecciona una categoría</option>
+                <option>Tecnología</option>
+                <option>Redes</option>
+                <option>Salud</option>
+                <option>Ciencia de Datos</option>
+              </select>
+              <span class="field-error">Selecciona una categoría</span>
+            </div>
+            <div class="field field-dark">
+              <label for="proj-size">Tamaño de equipo</label>
+              <input type="number" id="proj-size" min="1" max="200" placeholder="Ej. 5" required>
+              <span class="field-error">Ingresa un número entre 1 y 200</span>
+            </div>
+          </div>
+          <div class="field field-dark">
+            <label>Habilidades que requiere el proyecto</label>
+            <div class="checkbox-group" id="proj-habilidades-group">
+              <p class="muted-sm">Cargando habilidades…</p>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" data-goto-screen="home">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Publicar proyecto</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="screen-profile" class="screen">
+      <button class="back-link" data-goto-screen="home">← Volver</button>
+      <h1 class="page-title">Mi perfil</h1>
+
+      <div class="profile-banner">
+        <div class="profile-avatar-wrap">
+          <img id="profile-avatar" src="" alt="Avatar" class="profile-avatar is-hidden">
+          <svg viewBox="0 0 24 24" id="profile-avatar-fallback" class="profile-avatar-fallback"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path></svg>
+        </div>
+        <div class="profile-info">
+          <h2 id="profile-name">José Luis Pardo Páez</h2>
+          <p id="profile-role">Desarrollador Full Stack | Diseñador UX</p>
+        </div>
+        <button class="btn btn-primary btn-small" data-goto-screen="profile-edit">Editar perfil</button>
+      </div>
+
+      <div class="tab-pills" id="profile-tabs">
+        <button class="tab-pill is-active" data-profile-tab="proyectos">Tus proyectos</button>
+        <button class="tab-pill" data-profile-tab="colaboraciones">Colaboraciones</button>
+        <button class="tab-pill" data-profile-tab="medallas">Medallas</button>
+        <button class="tab-pill" data-profile-tab="evaluaciones">Tus evaluaciones</button>
+      </div>
+
+      <div class="profile-panel is-active" data-profile-panel="proyectos" id="profile-proyectos-panel">
+        <!-- Se llena dinámicamente con los proyectos reales que creó este usuario -->
+      </div>
+
+      <div class="profile-panel" data-profile-panel="colaboraciones" id="profile-colaboraciones-panel">
+        <!-- Se llena dinámicamente cuando el usuario colabore en algún proyecto -->
+      </div>
+
+      <div class="profile-panel" data-profile-panel="medallas">
+        <div class="medal-grid" id="profile-medal-grid"></div>
+      </div>
+
+      <div class="profile-panel" data-profile-panel="evaluaciones" id="profile-evaluaciones-panel">
+        <!-- Se llena dinámicamente cuando el usuario reciba una evaluación calificada -->
+      </div>
+    </section>
+
+    <!-- PROFILE EDIT -->
+    <section id="screen-profile-edit" class="screen">
+      <button class="back-link" data-goto-screen="profile">← Volver</button>
+      <div class="form-card">
+        <div class="edit-grid">
+          <div class="edit-avatar-col">
+            <p class="field-label">Cambiar imagen</p>
+            <div class="profile-avatar-wrap profile-avatar-wrap-lg">
+              <img id="edit-avatar-preview" src="" alt="Avatar" class="profile-avatar is-hidden">
+              <svg viewBox="0 0 24 24" id="edit-avatar-fallback" class="profile-avatar-fallback"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path></svg>
+            </div>
+            <input type="file" id="avatar-file" accept="image/*" class="is-hidden">
+            <button type="button" class="btn btn-primary btn-small" id="btn-upload-avatar">Subir</button>
+          </div>
+          <form id="form-profile-edit" class="edit-fields-col" novalidate>
+            <div class="field field-dark">
+              <label for="edit-name">Nombre</label>
+              <input type="text" id="edit-name" required minlength="3">
+              <span class="field-error">Ingresa un nombre válido</span>
+            </div>
+            <div class="field field-dark">
+              <label for="edit-desc">Descripción</label>
+              <input type="text" id="edit-desc" required minlength="3">
+              <span class="field-error">Ingresa una descripción válida</span>
+            </div>
+            <div class="form-actions form-actions-end">
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEDALS -->
+    <section id="screen-medals" class="screen">
+      <button class="back-link" data-goto-screen="home">← Volver</button>
+      <h1 class="page-title">Medallas</h1>
+      <p class="page-subtitle">Completa retos y demuestra tus habilidades para desbloquear reconocimientos.</p>
+      <div class="medal-grid" id="medals-grid"></div>
+    </section>
+
+    <!-- MEDAL DETAIL / EXAM -->
+    <section id="screen-medal-detail" class="screen">
+      <button class="back-link" data-goto-screen="medals">← Volver</button>
+      <div class="form-card form-card-narrow" id="medal-intro-card">
+        <h2 id="medal-detail-title">Nombre de la medalla</h2>
+        <p class="form-subtitle" id="medal-detail-desc">Esta evaluación está diseñada para calificar tus habilidades prácticas y el rigor de tu técnica. Mide tu conocimiento en el área y tu capacidad de resolver problemas reales.</p>
+        <p class="muted">Duración del examen: <strong id="medal-detail-duration">60 minutos</strong></p>
+        <div class="form-actions">
+          <button class="btn btn-ghost" data-goto-screen="medals">Volver</button>
+          <button class="btn btn-primary" id="btn-start-medal-exam">Comenzar</button>
+        </div>
+      </div>
+
+      <div class="form-card form-card-narrow is-hidden" id="medal-exam-card">
+        <h2 id="medal-exam-title">Medalla Programación</h2>
+        <p class="form-subtitle">Instrucciones: Ingresa el algoritmo entero y correcto al formulario.</p>
+        <div class="code-block">
+function fibonacci(n) &#123;
+  if (n &lt;= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+&#125;
+        </div>
+        <form id="form-medal-exam" novalidate>
+          <div class="field field-dark">
+            <label for="medal-answer">Tu solución</label>
+            <textarea id="medal-answer" rows="5" placeholder="Escribe tu código aquí…" required minlength="10"></textarea>
+            <span class="field-error">Escribe una solución antes de entregar</span>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" data-goto-screen="medals">Volver</button>
+            <button type="submit" class="btn btn-primary">Entregar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- CREATE EVALUATION -->
+    <section id="screen-create-evaluation" class="screen">
+      <button class="back-link" data-goto-screen="home">← Volver</button>
+      <div class="form-card form-card-narrow" id="eval-step-select">
+        <h2>Selecciona el proyecto a evaluar</h2>
+        <p class="form-subtitle">Elige el proyecto para revisar a sus solicitantes o crear una nueva evaluación.</p>
+        <div class="field field-dark">
+          <label for="eval-project-select">Proyecto</label>
+          <select id="eval-project-select">
+            <option value="">Selecciona un proyecto</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary btn-block" id="btn-eval-comenzar">Comenzar</button>
+        </div>
+      </div>
+
+      <div class="form-card form-card-narrow is-hidden" id="eval-step-applicants">
+        <h2>Solicitantes</h2>
+        <p class="form-subtitle">Revisa y acepta a los candidatos que quieren unirse a tu proyecto.</p>
+        <div class="applicant-list" id="applicant-list"></div>
+      </div>
+
+      <div class="form-card form-card-narrow is-hidden" id="eval-step-type">
+        <h2>¿Cómo evaluaremos ahora?</h2>
+        <p class="form-subtitle">Elige el formato de evaluación para el candidato aceptado.</p>
+        <div class="eval-type-grid">
+          <button class="eval-type-btn" data-eval-type="formulario">📋<span>Formulario</span></button>
+          <button class="eval-type-btn" data-eval-type="codigo">💻<span>Código</span></button>
+          <button class="eval-type-btn" data-eval-type="corregir">🛠️<span>Corregir un código</span></button>
+          <button class="eval-type-btn" data-eval-type="trabajo">📁<span>Trabajo propio</span></button>
+        </div>
+      </div>
+
+      <div class="form-card form-card-narrow is-hidden" id="eval-step-form">
+        <h2 id="eval-form-title">Crear "Formulario"</h2>
+        <p class="form-subtitle">Instrucciones: ingresa el algoritmo entero y correcto al formulario.</p>
+        <form id="form-eval-create" novalidate>
+          <div class="field field-dark">
+            <label for="eval-instructions">Instrucciones para el candidato</label>
+            <textarea id="eval-instructions" rows="5" placeholder="Describe la tarea, tiempo límite y criterios de evaluación…" required minlength="15"></textarea>
+            <span class="field-error">La instrucción debe tener al menos 15 caracteres</span>
+          </div>
+          <div class="field field-dark">
+            <label for="eval-duration">Duración (minutos)</label>
+            <input type="number" id="eval-duration" min="5" max="1440" placeholder="60" required>
+            <span class="field-error">Ingresa una duración entre 5 y 1440 minutos</span>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" data-goto-screen="home">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section id="screen-report" class="screen">
+      <button class="back-link" data-goto-screen="home">← Volver</button>
+      <div class="form-card form-card-narrow">
+        <h2>Reporte</h2>
+        <p class="form-subtitle">Ayúdanos a mantener la comunidad segura. Cuéntanos qué está pasando.</p>
+        <form id="form-report" novalidate>
+          <div class="field field-dark">
+            <label for="report-type">¿Qué deseas reportar?</label>
+            <select id="report-type" required>
+              <option value="">Selecciona una opción</option>
+              <option value="usuario">Un usuario</option>
+              <option value="proyecto">Un proyecto</option>
+            </select>
+            <span class="field-error">Selecciona qué deseas reportar</span>
+          </div>
+          <div class="field field-dark">
+            <label for="report-target">Usuario o proyecto</label>
+            <input type="text" id="report-target" placeholder="Nombre del usuario o proyecto" required minlength="2">
+            <span class="field-error">Ingresa el nombre del usuario o proyecto</span>
+          </div>
+          <div class="field field-dark">
+            <label for="report-reason">Motivo</label>
+            <textarea id="report-reason" rows="4" placeholder="Explica brevemente qué ocurrió, con el mayor detalle posible…" required minlength="10"></textarea>
+            <span class="field-error">Cuéntanos con más detalle (mín. 10 caracteres)</span>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" data-goto-screen="home">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Enviar reporte</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">© 2026 WorkinOn. Todos los derechos reservados.</footer>
+</div>
+
+<!-- ======================= MODALS ======================= -->
+<div class="modal-backdrop" id="modal-backdrop"></div>
+
+<div class="modal" id="modal-confirm">
+  <h2>Continuar…</h2>
+  <div class="modal-body">
+    <p id="modal-confirm-text">¿Estás seguro que deseas guardar? Una vez guardado, todos los usuarios podrán ver la modificación.</p>
+    <div class="modal-check">✓</div>
+  </div>
+  <div class="modal-actions">
+    <button class="btn btn-ghost" id="modal-confirm-cancel">Cancelar</button>
+    <button class="btn btn-primary" id="modal-confirm-accept">Aceptar</button>
+  </div>
+</div>
+
+<div class="modal modal-sm" id="modal-success">
+  <div class="modal-success-icon">✓</div>
+  <p id="modal-success-text">Se ha enviado la solicitud</p>
+  <button class="btn btn-primary btn-block" id="modal-success-close">Continuar</button>
+</div>
+
+<script src="js/db.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
