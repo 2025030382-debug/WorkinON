@@ -1,21 +1,8 @@
 # WorkinON — versión estática (HTML + CSS + JS)
 
-Esta carpeta es una versión de WorkinON que **no necesita servidor**.
-Sirve para publicarla en Vercel (o Netlify, GitHub Pages, etc.), que no
-pueden correr el backend de Java + Spring Boot + MySQL.
 
-## ¿Qué cambió respecto a la versión con Java?
 
-Toda la lógica que antes vivía en el backend (Spring Boot) ahora vive
-en el navegador, dentro de `js/db.js`. Ese archivo simula una base de
-datos usando `localStorage`, y expone las mismas "rutas" que antes
-atendía el servidor (`/auth/login`, `/proyectos`, `/solicitudes`,
-`/medallas`, etc.). Gracias a eso, `js/script.js` (toda la lógica de
-pantallas: login, buscar proyectos, solicitudes, medallas,
-evaluaciones, reportes...) **no tuvo que cambiar casi nada**, solo la
-forma en que se conecta con los datos.
-
-Esto significa que la app funciona al 100% sin backend:
+ La app funciona al 100% sin backend:
 - Crear cuenta / iniciar sesión (contraseñas guardadas en tu navegador,
   no con hash real como en la versión con Spring Security — ver nota
   de seguridad abajo).
@@ -53,30 +40,4 @@ desplegando el proyecto `workinon-backend` en Render/Railway y
 apuntando el frontend a esa URL), que es justamente lo que tenías
 antes.
 
-## Cómo publicar en Vercel
-
-**Opción A — desde la web de Vercel:**
-1. Sube esta carpeta (`workinon`) a un repositorio de GitHub.
-2. En vercel.com → "Add New Project" → importa el repositorio.
-3. Framework Preset: "Other" (sitio estático). No hay que configurar
-   build command ni output directory, Vercel detecta `index.html`.
-4. Deploy.
-
-**Opción B — desde la terminal:**
-```bash
-npm i -g vercel
-cd workinon
-vercel
-```
-
-## Estructura
-
-```
-index.html          Toda la interfaz (pantallas de login, home, buscar, etc.)
-css/styles.css       Estilos (sin cambios respecto al original)
-js/db.js             "Backend" local en localStorage (NUEVO)
-js/script.js         Lógica de pantallas (casi sin cambios, ahora usa js/db.js)
-assets/logo.png       Logo
-vercel.json           Configuración mínima para Vercel
-```
 "# WorkinON" 
